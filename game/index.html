@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>SANDLINE — Dustworks Yard</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #101319; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  #game { display: block; width: 100%; height: 100%; }
+  #hud { position: fixed; inset: 0; pointer-events: none; color: #f2ede2; user-select: none; }
+  .panel { background: rgba(16, 19, 25, 0.62); border: 1px solid rgba(242, 237, 226, 0.18); border-radius: 4px; }
+
+  /* top bar: score, timer, round */
+  #top { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 14px; padding: 8px 18px; }
+  #score-v { color: #7fa8e8; font-weight: 800; font-size: 22px; }
+  #score-e { color: #e88a5a; font-weight: 800; font-size: 22px; }
+  #timer { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; min-width: 64px; text-align: center; }
+  #round { font-size: 11px; letter-spacing: 2px; color: #c9b98f; }
+  #pips-v, #pips-e { font-size: 12px; letter-spacing: 3px; }
+  #pips-v { color: #7fa8e8; }
+  #pips-e { color: #e88a5a; }
+
+  /* bottom left: health, armor, money */
+  #vitals { position: absolute; left: 18px; bottom: 18px; width: 260px; }
+  #health-text { font-size: 34px; font-weight: 800; line-height: 1; }
+  .bar { height: 8px; background: rgba(255,255,255,0.14); border-radius: 4px; overflow: hidden; margin-top: 6px; }
+  #health-fill { height: 100%; width: 100%; background: #e8b23a; }
+  #armor-fill { height: 100%; width: 0%; background: #7fa8e8; }
+  #money { font-size: 20px; font-weight: 700; color: #9ed07a; margin-top: 8px; }
+
+  /* bottom right: ammo */
+  #ammo-box { position: absolute; right: 18px; bottom: 18px; text-align: right; }
+  #ammo { font-size: 34px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  #site { font-size: 12px; letter-spacing: 3px; color: #c9b98f; margin-top: 4px; }
+
+  /* center: crosshair and hitmarker */
+  #crosshair { position: absolute; left: 50%; top: 50%; width: 0; height: 0; --gap: 6px; }
+  #crosshair::before, #crosshair::after { content: ""; position: absolute; background: rgba(242,237,226,0.9); }
+  #crosshair::before { left: calc(-1px); top: calc(-1 * var(--gap) - 7px); width: 2px; height: 7px; box-shadow: 0 calc(2 * var(--gap) + 7px) 0 rgba(242,237,226,0.9); }
+  #crosshair::after { top: calc(-1px); left: calc(-1 * var(--gap) - 7px); height: 2px; width: 7px; box-shadow: calc(2 * var(--gap) + 7px) 0 0 rgba(242,237,226,0.9); }
+  #hitmarker { display: none; position: absolute; left: 50%; top: 50%; width: 22px; height: 22px; margin: -11px 0 0 -11px; border: 2px solid #fff; transform: rotate(45deg); }
+
+  /* killfeed */
+  #killfeed { position: absolute; top: 64px; right: 18px; text-align: right; font-size: 13px; }
+  .feed-row { margin-bottom: 4px; text-shadow: 0 1px 2px #000; }
+  .feed-k { color: #7fa8e8; font-weight: 700; }
+  .feed-v { color: #e88a5a; font-weight: 700; }
+  .feed-x { color: #f2ede2; margin: 0 6px; }
+
+  /* banners */
+  #banner { position: absolute; left: 50%; top: 30%; transform: translateX(-50%); display: none; flex-direction: column; align-items: center; text-align: center; }
+  #banner-title { font-size: 44px; font-weight: 900; letter-spacing: 4px; text-shadow: 0 2px 12px rgba(0,0,0,0.7); }
+  #banner-sub { font-size: 15px; color: #d8cfae; margin-top: 6px; text-shadow: 0 1px 4px #000; }
+
+  /* buy menu */
+  #buy-menu { display: none; position: absolute; left: 18px; top: 90px; width: 380px; padding: 12px 14px; pointer-events: auto; }
+  #buy-menu h2 { font-size: 14px; letter-spacing: 3px; color: #f0a830; margin-bottom: 10px; }
+  .buy-row { display: flex; gap: 10px; align-items: baseline; padding: 7px 8px; border-radius: 3px; font-size: 14px; }
+  .buy-row.owned { color: #9ed07a; }
+  .buy-row.poor { opacity: 0.45; }
+  .buy-key { background: rgba(255,255,255,0.16); border-radius: 3px; padding: 1px 7px; font-weight: 700; }
+  .buy-name { flex: 1; font-weight: 600; }
+  .buy-dmg { color: #c9b98f; font-size: 12px; }
+  .buy-price { font-weight: 700; }
+
+  /* bomb, plant, hint, vignette */
+  #bomb-timer { display: none; position: absolute; left: 50%; top: 84px; transform: translateX(-50%); font-size: 20px; font-weight: 800; color: #ffb35c; text-shadow: 0 1px 4px #000; }
+  #plant-bar { display: none; position: absolute; left: 50%; top: 58%; transform: translateX(-50%); width: 220px; height: 10px; background: rgba(255,255,255,0.16); border-radius: 5px; overflow: hidden; }
+  #plant-fill { height: 100%; width: 0%; background: #f0a830; }
+  #hint { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); font-size: 12px; color: rgba(242,237,226,0.75); text-shadow: 0 1px 2px #000; }
+  #vignette { position: fixed; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.4s; background: radial-gradient(ellipse at center, transparent 55%, rgba(200,20,10,0.55) 100%); }
+</style>
+</head>
+<body>
+<canvas id="game"></canvas>
+<div id="vignette"></div>
+<div id="hud">
+  <div id="top" class="panel">
+    <span id="pips-v">●●●●●</span>
+    <span id="score-v">0</span>
+    <span id="round">ROUND 1</span>
+    <span id="timer">0:12</span>
+    <span id="score-e">0</span>
+    <span id="pips-e">●●●●●</span>
+  </div>
+  <div id="bomb-timer"></div>
+  <div id="plant-bar"><div id="plant-fill"></div></div>
+  <div id="banner"><div id="banner-title"></div><div id="banner-sub"></div></div>
+  <div id="killfeed"></div>
+  <div id="crosshair"></div>
+  <div id="hitmarker"></div>
+  <div id="vitals">
+    <div id="health-text">100</div>
+    <div class="bar"><div id="health-fill"></div></div>
+    <div class="bar"><div id="armor-fill"></div></div>
+    <div id="money">$800</div>
+  </div>
+  <div id="ammo-box">
+    <div id="ammo">12 / 48</div>
+    <div id="site"></div>
+  </div>
+  <div id="buy-menu" class="panel">
+    <h2>BUY — DUSTWORKS YARD</h2>
+    <div id="buy-items"></div>
+  </div>
+  <div id="hint"></div>
+</div>
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three/three.module.min.js"
+  }
+}
+</script>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
