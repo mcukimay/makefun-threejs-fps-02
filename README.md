@@ -4,6 +4,15 @@ A round-based tactical FPS for make.fun's threejs-fps-02. Two teams of five figh
 over a dusk desert works yard: Vanguard attacks, Ember defends, first to 5 rounds
 takes the match.
 
+> v2 (resubmission): the v1 entry was graded invalid — its `game/index.html`
+> carried `<link rel="icon" href="data:,">`, the one reference in the game that
+> does not resolve to a file inside `game/`, which the scorer's `references`
+> row requires of every `<link href>`. v2 removes the favicon link entirely
+> (no external reference remains), fixes the buy menu listing Longshot before
+> Breacher, keeps the killfeed inside the viewport, frames the plant screenshot
+> on the bomb and the converging defenders, and keeps the end banner on one line.
+> All four screenshots were retaken from the fixed build in headless Chrome.
+
 ## The game
 
 - **Map** — Dustworks Yard, 44×36 m: site A "Silos" (north-west), site B "Depot"

@@ -481,6 +481,10 @@ function setupShot(mode) {
       player.state.armor = 50;
       step(FIXED);
     }
+    // Pull the camera back and up so the frame shows the planted bomb, the
+    // site ring and the silos — not the wall the planter was facing.
+    camera.position.set(-15, 2.8, -4.2);
+    camera.lookAt(-15, 0.2, -12);
   } else if (mode === 'end') {
     match.state.scoreV = 5;
     match.state.scoreE = 2;

@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="data:,">
 <title>SANDLINE — Dustworks Yard</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -43,15 +42,15 @@
   #hitmarker { display: none; position: absolute; left: 50%; top: 50%; width: 22px; height: 22px; margin: -11px 0 0 -11px; border: 2px solid #fff; transform: rotate(45deg); }
 
   /* killfeed */
-  #killfeed { position: absolute; top: 64px; right: 18px; text-align: right; font-size: 13px; }
-  .feed-row { margin-bottom: 4px; text-shadow: 0 1px 2px #000; }
+  #killfeed { position: absolute; top: 64px; right: 18px; text-align: right; font-size: 13px; max-width: 340px; }
+  .feed-row { margin-bottom: 4px; text-shadow: 0 1px 2px #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .feed-k { color: #7fa8e8; font-weight: 700; }
   .feed-v { color: #e88a5a; font-weight: 700; }
   .feed-x { color: #f2ede2; margin: 0 6px; }
 
   /* banners */
   #banner { position: absolute; left: 50%; top: 30%; transform: translateX(-50%); display: none; flex-direction: column; align-items: center; text-align: center; }
-  #banner-title { font-size: 44px; font-weight: 900; letter-spacing: 4px; text-shadow: 0 2px 12px rgba(0,0,0,0.7); }
+  #banner-title { font-size: 40px; font-weight: 900; letter-spacing: 4px; white-space: nowrap; text-shadow: 0 2px 12px rgba(0,0,0,0.7); }
   #banner-sub { font-size: 15px; color: #d8cfae; margin-top: 6px; text-shadow: 0 1px 4px #000; }
 
   /* buy menu */

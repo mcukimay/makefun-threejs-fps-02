@@ -10,8 +10,8 @@ export const WEAPONS = {
   pistol: { name: 'P9 Sidearm', kind: 'pistol', price: 0, damage: 26, headMult: 4, mag: 12, reserve: 48, auto: false, gap: 0.22, reload: 1.4, spreadStill: 0.005, spreadMove: 0.028, kick: 0.011, falloff: 14 },
   smg: { name: 'VK-9 SMG', kind: 'smg', price: 1500, damage: 24, headMult: 4, mag: 30, reserve: 120, auto: true, gap: 0.075, reload: 1.8, spreadStill: 0.007, spreadMove: 0.034, kick: 0.007, falloff: 16 },
   rifle: { name: 'AR-77 Rifle', kind: 'rifle', price: 2700, damage: 33, headMult: 4, mag: 30, reserve: 90, auto: true, gap: 0.096, reload: 2.1, spreadStill: 0.003, spreadMove: 0.03, kick: 0.009, falloff: 30 },
-  sniper: { name: 'Longshot', kind: 'sniper', price: 4750, damage: 88, headMult: 2.5, mag: 5, reserve: 15, auto: false, gap: 1.1, reload: 2.8, spreadStill: 0.0008, spreadMove: 0.02, kick: 0.05, falloff: 60, zoom: true },
   shotgun: { name: 'Breacher', kind: 'shotgun', price: 1700, damage: 9, headMult: 3, mag: 6, reserve: 24, auto: false, gap: 0.85, reload: 2.6, spreadStill: 0.028, spreadMove: 0.04, kick: 0.03, falloff: 10, pellets: 8 },
+  sniper: { name: 'Longshot', kind: 'sniper', price: 4750, damage: 88, headMult: 2.5, mag: 5, reserve: 15, auto: false, gap: 1.1, reload: 2.8, spreadStill: 0.0008, spreadMove: 0.02, kick: 0.05, falloff: 60, zoom: true },
 };
 
 const VIEW = {

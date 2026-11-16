@@ -16,7 +16,7 @@ export function createBomb(scene, sites) {
     new THREE.MeshStandardMaterial({ color: new THREE.Color(PALETTE.ink), roughness: 0.5, metalness: 0.4 }),
   );
   const light = new THREE.Mesh(
-    new THREE.SphereGeometry(0.035, 8, 8),
+    new THREE.SphereGeometry(0.05, 8, 8),
     new THREE.MeshBasicMaterial({ color: new THREE.Color('#ff4030') }),
   );
   light.position.set(0.12, 0.12, 0);
@@ -26,6 +26,7 @@ export function createBomb(scene, sites) {
   );
   wire.position.set(0, 0.11, 0);
   group.add(body, light, wire);
+  group.scale.setScalar(1.4); // planted bomb reads at a glance across the site
   group.visible = false;
   scene.add(group);
 
