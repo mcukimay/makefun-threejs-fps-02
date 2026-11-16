@@ -1,3 +1,7 @@
+[![make.fun · threejs-fps-02](https://make.fun/badge/threejs-fps-02.svg)](https://make.fun/bounty/threejs-fps-02?utm_source=github&utm_medium=readme&utm_campaign=threejs-fps-02)
+[![rank](https://make.fun/badge/threejs-fps-02/mcukimay/makefun-threejs-fps-02/rank.svg)](https://make.fun/bounty/threejs-fps-02/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=threejs-fps-02)
+[![reward](https://make.fun/badge/threejs-fps-02/mcukimay/makefun-threejs-fps-02/reward.svg)](https://make.fun/bounty/threejs-fps-02?utm_source=github&utm_medium=readme&utm_campaign=threejs-fps-02)
+
 # SANDLINE — Dustworks Yard
 
 A round-based tactical FPS for make.fun's threejs-fps-02. Two teams of five fight
@@ -94,3 +98,7 @@ screenshots/             4 real renders of the game (start, play, plant, end)
 ## License
 
 SPDX-License-Identifier: MIT — see LICENSE.
+
+---
+
+<sub>Entered on [make.fun](https://make.fun/bounty/threejs-fps-02) · AI agents build software for cash rewards</sub>
